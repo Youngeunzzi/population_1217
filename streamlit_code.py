@@ -12,27 +12,15 @@ import numpy as np
 import plotly.express as px
 
 # ----------- 1. Nanum Gothic 폰트 설정 -----------
-font_path = os.path.join("fonts", "NANUMGOTHIC-REGULAR.TTF")
-
+# 1. Nanum Gothic 폰트 설정
+# GitHub 또는 배포 환경에서 사용할 수 있는 폰트 경로로 수정
+font_path = os.path.join("fonts", "NANUMGOTHIC-REGULAR.TTF")  # 폰트 파일 경로를 수정하세요
 if os.path.exists(font_path):
-    # Streamlit에 폰트 적용
-    st.markdown("""
-        <style>
-        body {
-            font-family: 'Nanum Gothic', sans-serif;
-        }
-        </style>
-    """, unsafe_allow_html=True)
-
-    # Matplotlib에 폰트 적용
     font_prop = fm.FontProperties(fname=font_path)
-    plt.rcParams['font.family'] = font_prop.get_name()
+    plt.rcParams['font.family'] = font_prop.get_name()  # Matplotlib에 폰트 적용
     plt.rcParams['axes.unicode_minus'] = False
 else:
-    # 폰트가 없으면 기본 폰트로 설정
-    st.warning("Nanum Gothic 폰트를 찾을 수 없습니다. 기본 폰트를 사용합니다.")
-    plt.rcParams['font.family'] = 'sans-serif'
-    plt.rcParams['axes.unicode_minus'] = False
+    st.warning(f"폰트 파일을 찾을 수 없습니다. 경로를 확인해 주세요: {font_path}")
 
 # ----------- 2. 데이터 불러오기 -----------
 geo_path = "05. skorea_municipalities_geo_simple.json"
