@@ -16,6 +16,15 @@ import plotly.express as px
 font_path = os.path.join("fonts", "NANUMGOTHIC-REGULAR.TTF")
 
 if os.path.exists(font_path):
+    # Streamlit에 폰트 적용
+    st.markdown("""
+        <style>
+        body {
+            font-family: 'Nanum Gothic', sans-serif;
+        }
+        </style>
+    """, unsafe_allow_html=True)
+
     # Matplotlib에 폰트 적용
     font_prop = fm.FontProperties(fname=font_path)
     plt.rcParams['font.family'] = font_prop.get_name()
@@ -45,7 +54,7 @@ elif category == '여성비':
     st.title("💁‍♀️👵 여성비 대시보드")
 elif category == '2030여성비':
     st.title("💁‍♀️ 2030여성비 대시보드")
-
+    
 # 카토그램 시각화 (matplotlib을 통한 처리)
 def drawKorea(targetData, blockedMap, cmapname, title):
     gamma = .75
