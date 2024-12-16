@@ -86,6 +86,17 @@ if category == '총인구수':
         table = pop[['ID', '인구수합계']].sort_values(by='인구수합계', ascending=False).head(10)
         st.write(table)
 
+        st.markdown("""
+        <div style="border: 2px solid #0066cc; padding: 10px; margin-top: 10px; border-radius: 5px; background-color: #f0f8ff;">
+            <h4>🔍 정보</h4>
+            <ul>
+                <li><strong>데이터</strong>: 2016년 성인 인구통계</li>
+                <li><strong>출처</strong>: KOSIS 국가통계포털</li>
+                <li><strong>선정 기준</strong>: 20세-100세 이상</li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
+
 elif category == '소멸위기지역':
     with col1:
         st_folium(create_choropleth('소멸위기지역', '소멸위기지역', 'PuRd'), width=700)
@@ -95,15 +106,31 @@ elif category == '소멸위기지역':
         fig = px.pie(values=crisis_counts, names=crisis_counts.index, hole=0.4, title="소멸위기지역 비율")
         st.plotly_chart(fig)
 
+        st.markdown("""
+        <div style="border: 2px solid #ff6666; padding: 10px; margin-top: 10px; border-radius: 5px; background-color: #ffe6e6;">
+            <h4>🔍 요약</h4>
+            <ul>
+                <li><strong>소멸위기지역 비율</strong>: 약 67.1%</li>
+                <li><strong>소멸위기지역 1위</strong>: 경기도 수원시 영통구</li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
+
 elif category == '여성비':
     pop['여성비'] = (pop['인구수여자'] / pop['인구수합계'] - 0.5) * 100
     with col1:
         st_folium(create_choropleth('여성비', '여성비', 'RdBu'), width=700)
         drawKorea('여성비', pop, 'RdBu', '지역별 여성비 분포 한눈에 보기')
     with col2:
-        avg_female_ratio = pop.groupby('소멸위기지역')['여성비'].mean().reset_index()
-        fig = px.bar(avg_female_ratio, x="소멸위기지역", y="여성비", title="소멸위기지역별 여성비 비교")
-        st.plotly_chart(fig)
+        st.markdown("""
+        <div style="border: 2px solid #ff9933; padding: 10px; margin-top: 10px; border-radius: 5px; background-color: #fff5e6;">
+            <h4>🔍 요약</h4>
+            <ul>
+                <li><strong>소멸위기지역 평균 여성비</strong>: 3.2%</li>
+                <li><strong>비소멸위기지역 평균 여성비</strong>: 1.8%</li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
 
 elif category == '2030여성비':
     pop['2030여성비'] = (pop['20-39세여자'] / pop['20-39세합계'] - 0.5) * 100
@@ -111,6 +138,9 @@ elif category == '2030여성비':
         st_folium(create_choropleth('2030여성비', '2030여성비', 'RdBu'), width=700)
         drawKorea('2030여성비', pop, 'RdBu', '지역별 2030여성비 분포 한눈에 보기')
     with col2:
-        avg_2030 = pop.groupby('ID')['2030여성비'].mean().reset_index().sort_values(by='2030여성비', ascending=False).head(10)
-        fig = px.bar(avg_2030, x="ID", y="2030여성비", title="2030여성비 상위 10개 지역")
-        st.plotly_chart(fig)
+        st.markdown("""
+        <div style="border: 2px solid #0073e6; padding: 10px; margin-top: 10px; border-radius: 5px; background-color: #f0f8ff;">
+            <h4>📏 수식</h4>
+            <p><strong>2030여성비 = (20-39세 여성 인구 / 20-39세 총 인구 - 0.5) * 100</strong></p>
+        </div>
+        """, unsafe_allow_html=True)
