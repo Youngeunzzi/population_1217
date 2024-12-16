@@ -14,30 +14,15 @@ import numpy as np
 import plotly.express as px
 
 # ----------- 1. Nanum Gothic 폰트 설정 -----------
-
-# 폰트를 임시 디렉터리에 복사한 후 불러오기
-temp_font_dir = "./temp_fonts"
-os.makedirs(temp_font_dir, exist_ok=True)
-
-# 원본 폰트 파일 경로
-source_font_path = os.path.join("fonts", "NANUMGOTHIC-REGULAR.TTF")
-temp_font_path = os.path.join(temp_font_dir, "NANUMGOTHIC-REGULAR.TTF")
-
-# 폰트 파일 복사
-if os.path.exists(source_font_path):
-    if not os.path.exists(temp_font_path):
-        shutil.copy(source_font_path, temp_font_path)
-else:
-    st.error("❌ 폰트 파일이 fonts 디렉터리에 존재하지 않습니다. 경로를 확인하세요.")
-
-# Matplotlib 폰트 설정
-if os.path.exists(temp_font_path):
-    font_prop = fm.FontProperties(fname=temp_font_path)
+# 1. Nanum Gothic 폰트 설정
+font_path = os.path.join("fonts", "NANUMGOTHIC-REGULAR.TTF")  # 정확한 경로 지정
+if os.path.exists(font_path):
+    font_prop = fm.FontProperties(fname=font_path)
     plt.rcParams['font.family'] = font_prop.get_name()
     plt.rcParams['axes.unicode_minus'] = False
-    st.success(f"✅ NanumGothic 폰트가 정상적으로 적용되었습니다: {temp_font_path}")
 else:
-    st.error("❌ 임시 폰트 경로에서 폰트를 불러오지 못했습니다.")
+    raise FileNotFoundError(f"Font file not found at {font_path}")
+
     
 # ----------- 2. 데이터 불러오기 -----------
 geo_path = "05. skorea_municipalities_geo_simple.json"
