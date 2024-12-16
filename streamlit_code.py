@@ -1,6 +1,5 @@
 # C011230 전영은
 # 배포 링크:
-
 import os
 import pandas as pd
 import folium
@@ -54,6 +53,7 @@ elif category == '여성비':
     st.title("💁‍♀️👵 여성비 대시보드")
 elif category == '2030여성비':
     st.title("💁‍♀️ 2030여성비 대시보드")
+
     
 # 카토그램 시각화 (matplotlib을 통한 처리)
 def drawKorea(targetData, blockedMap, cmapname, title):
