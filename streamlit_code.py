@@ -12,6 +12,7 @@ import matplotlib.font_manager as fm
 import numpy as np
 import plotly.express as px
 
+# ----------- 1. Nanum Gothic 폰트 설정 -----------
 font_path = os.path.join("fonts", "NANUMGOTHIC-REGULAR.TTF")
 
 if os.path.exists(font_path):
@@ -25,19 +26,17 @@ else:
     plt.rcParams['font.family'] = 'sans-serif'
     plt.rcParams['axes.unicode_minus'] = False
 
-# 데이터 준비
+# ----------- 2. 데이터 불러오기 -----------
 geo_path = "05. skorea_municipalities_geo_simple.json"
 geo_data = json.load(open(geo_path, encoding='utf-8'))
 pop = pd.read_excel('pop.xlsx')
 pop_folium = pop.set_index('ID')
 
-# Streamlit 대시보드 설정
+# ----------- 3. Streamlit 설정 -----------
 st.sidebar.header("📊 2016년 대한민국 인구")  # 제목 변경
-
-# 카테고리 선택
 category = st.sidebar.selectbox("카테고리 선택", ['총인구수', '소멸위기지역', '여성비', '2030여성비'])
 
-# 각 카테고리별로 동적으로 제목 설정
+# ----------- 4. 페이지별 제목 설정 -----------
 if category == '총인구수':
     st.title("👨‍👩‍👧 총인구수 대시보드")
 elif category == '소멸위기지역':
