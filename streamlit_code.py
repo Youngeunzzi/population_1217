@@ -13,12 +13,12 @@ import os
 import matplotlib.font_manager as fm
 
 # 폰트 경로 설정
-font_path = os.path.join("fonts", "NanumGothic.ttf")
+font_path = os.path.join("fonts", "NANUMGOTHIC-REGULAR.TTF")
 
-# 폰트 적용
+# 폰트 파일 확인
 if os.path.exists(font_path):
     font_name = fm.FontProperties(fname=font_path).get_name()
-    plt.rcParams['font.family'] = font_name  # 한글 폰트 적용
+    plt.rcParams['font.family'] = font_name
 else:
     raise FileNotFoundError(f"Font file not found at {font_path}. Ensure the file exists in the 'fonts' directory.")
 
