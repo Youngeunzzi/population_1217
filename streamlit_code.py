@@ -12,15 +12,17 @@ import plotly.express as px
 import os
 import matplotlib.font_manager as fm
 
-# 폰트 경로 설정
+# 폰트 경로 설정 (대소문자 확인 필수)
 font_path = os.path.join("fonts", "NANUMGOTHIC-REGULAR.TTF")
 
-# 폰트 파일 확인
+# 폰트 파일 확인 및 설정
 if os.path.exists(font_path):
-    font_name = fm.FontProperties(fname=font_path).get_name()
-    plt.rcParams['font.family'] = font_name
+    font_prop = fm.FontProperties(fname=font_path)
+    plt.rcParams['font.family'] = font_prop.get_name()
+    print("폰트 설정 성공:", font_prop.get_name())
 else:
     raise FileNotFoundError(f"Font file not found at {font_path}. Ensure the file exists in the 'fonts' directory.")
+
 
 
 # 지도 데이터 준비 (GeoJSON 경로 지정)
