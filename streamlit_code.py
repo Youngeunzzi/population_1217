@@ -12,17 +12,15 @@ import plotly.express as px
 import os
 import matplotlib.font_manager as fm
 
+# 폰트 경로 설정
+font_path = os.path.join("fonts", "NanumGothic.ttf")
 
-# 현재 파일이 있는 디렉토리 기준으로 폰트 경로 설정
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # 현재 파일의 절대 경로
-font_path = os.path.join(BASE_DIR, "fonts", "NanumGothic.ttf")
-
-if not os.path.exists(font_path):
+# 폰트 적용
+if os.path.exists(font_path):
+    font_name = fm.FontProperties(fname=font_path).get_name()
+    plt.rcParams['font.family'] = font_name  # 한글 폰트 적용
+else:
     raise FileNotFoundError(f"Font file not found at {font_path}. Ensure the file exists in the 'fonts' directory.")
-
-font_prop = fm.FontProperties(fname=font_path)
-plt.rcParams['font.family'] = font_prop.get_name()
-plt.rcParams['axes.unicode_minus'] = False  # 음수 기호 깨짐 방지
 
 
 # 지도 데이터 준비 (GeoJSON 경로 지정)
