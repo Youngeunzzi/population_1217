@@ -43,41 +43,48 @@ elif category == '여성비':
 elif category == '2030여성비':
     st.title("💁‍♀️ 2030여성비 대시보드")
 
-# ----------- 카토그램 시각화 함수 -----------
+    
+# 카토그램 시각화 (matplotlib을 통한 처리)
 def drawKorea(targetData, blockedMap, cmapname, title):
+    gamma = .75
     whitelabelmin = (max(blockedMap[targetData]) - min(blockedMap[targetData])) * 0.25 + min(blockedMap[targetData])
-    vmin, vmax = min(blockedMap[targetData]), max(blockedMap[targetData])
-
+    vmin = min(blockedMap[targetData])
+    vmax = max(blockedMap[targetData])
+    
     mapdata = blockedMap.pivot_table(index='y', columns='x', values=targetData)
     masked_mapdata = np.ma.masked_where(np.isnan(mapdata), mapdata)
-
-    # 그래프 생성
+    
+    # Matplotlib 그래프 수정
     fig, ax = plt.subplots(figsize=(6, 8))
     c = ax.pcolor(masked_mapdata, vmin=vmin, vmax=vmax, cmap=cmapname, edgecolor='#aaaaaa', linewidth=0.5)
-
-    # 지역명 표시 (폰트 적용)
+    
+    # 이름 표시 (텍스트가 길면, 여러 줄로 나누어서 표시)
     for idx, row in blockedMap.iterrows():
-        dispname = '\n'.join(row['ID'].split())  # 긴 이름 나누기
-        fontsize = 6
+        dispname = row['ID']
+        # 긴 이름을 여러 줄로 나누기
+        dispname = '\n'.join(dispname.split())
+        
+        fontsize, linespacing = 6, 1.2
+        row['x'] = int(row['x'])
         annocolor = 'white' if row[targetData] > whitelabelmin else 'black'
+        ax.annotate(dispname, (row['x']+0.5, row['y']+0.5), weight='bold', fontsize=fontsize, ha='center', va='center', color=annocolor, linespacing=linespacing)
 
-        ax.annotate(
-            dispname, (row['x'] + 0.5, row['y'] + 0.5),
-            weight='bold',
-            fontsize=fontsize,
-            ha='center', va='center',
-            color=annocolor, linespacing=1.2,
-            fontproperties=font_prop  # **폰트 적용**
-        )
-
-    # 그래프 세부 설정
     ax.invert_yaxis()
     ax.axis('off')
-    cbar = fig.colorbar(c, ax=ax, shrink=0.1, aspect=10)
-    cbar.set_label(targetData, fontproperties=font_prop)  # 컬러바 레이블에 폰트 적용
-    ax.set_title(title, fontsize=12, fontproperties=font_prop)  # 제목에 폰트 적용
+    cbar = fig.colorbar(c, ax=ax, shrink=.1, aspect=10)
+    cbar.set_label(targetData)
+    
+    # 범례의 값 수동 설정
+    if targetData == '2030여성비':
+        cbar.set_ticks([-10, 0, 10])  # 2030여성비의 범위 설정
+    elif targetData == '여성비':
+        cbar.set_ticks([-5, 0, 5])  # 여성비의 범위 설정
+    
+    ax.set_title(title, fontsize=12)  # 제목 추가
+    st.pyplot(fig)  # `st.pyplot()`을 사용하여 Streamlit에서 그래프를 출력
 
-    st.pyplot(fig)  # Streamlit에 그래프 출력    
+# Streamlit의 Columns를 사용하여 가로 배치
+col1, col2 = st.columns([2, 1])  # 지도는 크고 다른 차트들은 작은 크기로 설정
 
 if category == '총인구수':
     with col1:
@@ -290,4 +297,3 @@ elif category == '2030여성비':
             </div>
             """, unsafe_allow_html=True
         )
-
