@@ -1,6 +1,5 @@
 # C011230 전영은
 # 배포 링크: https://population1217-jhixieghajrhgkeqe4baum.streamlit.app/
-# streamlit 홈페이지에서 구현했을때, 자꾸 카토그램에 해당하는 글꼴이 깨집니다 ㅠㅠ... 계속 해결해봤는데도, 안돼서 그냥 제출하겠습니다.
 
 import os
 import pandas as pd
