@@ -14,8 +14,11 @@ import numpy as np
 import plotly.express as px
 
 # ----------- 1. Nanum Gothic 폰트 설정 -----------
-# 1. Nanum Gothic 폰트 설정
-font_path = os.path.join("fonts", "NANUMGOTHIC-REGULAR.TTF")  # 정확한 경로 지정
+# 현재 디렉터리 기준으로 폰트 경로 설정
+current_path = os.path.dirname(__file__)
+font_path = os.path.join(current_path, "fonts", "NANUMGOTHIC-REGULAR.TTF")
+
+# 폰트 등록
 if os.path.exists(font_path):
     font_prop = fm.FontProperties(fname=font_path)
     plt.rcParams['font.family'] = font_prop.get_name()
