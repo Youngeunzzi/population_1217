@@ -14,18 +14,14 @@ import numpy as np
 import plotly.express as px
 
 # ----------- 1. Nanum Gothic 폰트 설정 -----------
-# Matplotlib 기본 폰트 설정
-import matplotlib.pyplot as plt
-import matplotlib.font_manager as fm
-
-font_path = './fonts/NANUMGOTHIC-REGULAR.TTF'  # 폰트 경로
+# 1. Nanum Gothic 폰트 설정
+font_path = os.path.join("fonts", "NANUMGOTHIC-REGULAR.TTF")  # 정확한 경로 지정
 if os.path.exists(font_path):
     font_prop = fm.FontProperties(fname=font_path)
-    plt.rc('font', family=font_prop.get_name())
+    plt.rcParams['font.family'] = font_prop.get_name()
     plt.rcParams['axes.unicode_minus'] = False
 else:
-    st.write("폰트 파일을 찾을 수 없습니다.")
-
+    raise FileNotFoundError(f"Font file not found at {font_path}")
 
 # ----------- 2. 데이터 불러오기 -----------
 geo_path = "05. skorea_municipalities_geo_simple.json"
